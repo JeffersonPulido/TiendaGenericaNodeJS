@@ -1,0 +1,36 @@
+
+
+.formulario2 {
+    width: 1300px;
+	height: 730px;
+
+    color:black;
+    font-size: 22px;
+}
+
+.Use {
+    width: 250px;
+    height: 30px;
+    margin-top: 5px;
+    font-size: 12px;
+    color: black;
+    border-radius: 5px;
+    font-family: arial;	
+}
+
+.Used {
+    width: 250px;
+    height: 30px;
+    margin-top: 5px;
+    font-size: 12px;
+    background-color: #e9ecef;
+    color: black;
+    border-radius: 5px;    
+    font-family: arial;	
+}
+
+.titulo{
+	color: black;
+	font-weight: bold;
+	font-size: 15px;
+}
