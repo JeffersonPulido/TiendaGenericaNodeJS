@@ -16,24 +16,31 @@ router.post('/add', async (req, res) => {
     const cliente = new Cliente(req.body);
     await cliente.save();
     res.redirect('/');
-})
+});
 
 //DELETE
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
-    await Cliente.remove({_id: id});
+    await Cliente.deleteOne({_id: id});
     res.redirect('/');
-})
+});
 
-//EDIT
+//UPDATE LIST
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const cliente = await Cliente.findById(id);
     res.render('edit', {
         cliente
-    })
+    });
+    //res.redirect('/');
+});
+
+//UPDATE CHANGE
+router.post('/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    await Cliente.update({ _id: id }, req.body);
     res.redirect('/');
-})
+});
 
 
 module.exports = router;
