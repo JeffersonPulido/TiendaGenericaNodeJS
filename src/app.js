@@ -9,12 +9,12 @@ mongoose.connect('mongodb://localhost/tiendagenerica')
 .then(db => console.log('DB CONECTADO'))
 .catch(err => console.log(err));
 //IMPORT ROUTES
-const indexRoutes = require('./routes/index');
+const indexRoutes = require('./routes/RClientes');
 //SETTINGS
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-//app.use(express.static(__dirname + 'public'));
+app.use(express.static(__dirname + '/public'));
 //MIDDLEWARES
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));

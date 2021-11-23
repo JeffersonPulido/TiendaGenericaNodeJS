@@ -3,10 +3,16 @@ const router = express.Router();
 
 const Cliente = require('../models/clients');
 
-//READ
+//REDIRECCION INDEX
 router.get('/', async (req, res) => {
     const clients = await Cliente.find();
-    res.render('index', {
+    res.render('index');
+});
+
+//READ
+router.get('/clientes', async (req, res) => {
+    const clients = await Cliente.find();
+    res.render('clientes', {
         clients
     });
 });
@@ -15,14 +21,14 @@ router.get('/', async (req, res) => {
 router.post('/add', async (req, res) => {
     const cliente = new Cliente(req.body);
     await cliente.save();
-    res.redirect('/');
+    res.redirect('/clientes');
 });
 
 //DELETE
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
     await Cliente.deleteOne({_id: id});
-    res.redirect('/');
+    res.redirect('/clientes');
 });
 
 //UPDATE LIST
@@ -39,7 +45,7 @@ router.get('/edit/:id', async (req, res) => {
 router.post('/edit/:id', async (req, res) => {
     const { id } = req.params;
     await Cliente.update({ _id: id }, req.body);
-    res.redirect('/');
+    res.redirect('/clientes');
 });
 
 
