@@ -3,12 +3,30 @@ const router = express.Router();
 
 const Cliente = require('../models/clients');
 
+/**======================================================*/
+/** REDIRECCIONES VISTAS */
+
 //REDIRECCION INDEX
 router.get('/', async (req, res) => {
     const clients = await Cliente.find();
     res.render('index');
 });
 
+//REDIRECCION LOGIN
+router.get('/login', async (req, res) => {
+    const clients = await Cliente.find();
+    res.render('login');
+});
+
+//REDIRECCION HOME
+router.get('/home', async (req, res) => {
+    const clients = await Cliente.find();
+    res.render('home');
+});
+/**======================================================*/
+
+/**======================================================*/
+/** CRUD CLIENTES */
 //READ
 router.get('/clientes', async (req, res) => {
     const clients = await Cliente.find();
@@ -47,6 +65,6 @@ router.post('/edit/:id', async (req, res) => {
     await Cliente.update({ _id: id }, req.body);
     res.redirect('/clientes');
 });
-
+/**======================================================*/
 
 module.exports = router;
