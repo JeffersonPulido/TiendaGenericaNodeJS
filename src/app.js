@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/tiendagenerica')
 .then(db => console.log('DB CONECTADO'))
 .catch(err => console.log(err));
 //IMPORT ROUTES
-const indexRoutes = require('./routes/RClientes');
+const indexRoutes = require('./routes/routes');
 //SETTINGS
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));

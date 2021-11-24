@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+/**========================MODELS======================= */
 const Cliente = require('../models/clients');
-
+const Usuario = require('../models/users');
+/**===================================================== */
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
 
@@ -66,5 +68,22 @@ router.post('/edit/:id', async (req, res) => {
     res.redirect('/clientes');
 });
 /**======================================================*/
+/**======================================================*/
+/** CRUD USUARIOS */
+//READ
+router.get('/usuarios', async (req, res) => {
+    const usuarios = await Usuario.find();
+    res.render('usuarios', {
+        usuarios
+    });
+});
 
+//ADD
+router.post('/addUser', async (req, res) => {
+    const usuarios = new Usuario(req.body);
+    await usuarios.save();
+    res.redirect('/usuarios');
+});
+
+/**======================================================*/
 module.exports = router;
