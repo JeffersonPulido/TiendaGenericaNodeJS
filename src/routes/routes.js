@@ -58,7 +58,6 @@ router.get('/edit/:id', async (req, res) => {
     res.render('edit', {
         cliente
     });
-    //res.redirect('/');
 });
 
 //UPDATE CHANGE
@@ -85,5 +84,27 @@ router.post('/addUser', async (req, res) => {
     res.redirect('/usuarios');
 });
 
+//DELETE
+router.get('/deleteUser/:id', async (req, res) => {
+    const { id } = req.params;
+    await Usuario.deleteOne({_id: id});
+    res.redirect('/usuarios');
+});
+
+//UPDATE LIST
+router.get('/editUser/:id', async (req, res) => {
+    const { id } = req.params;
+    const usuarios = await Usuario.findById(id);
+    res.render('editUser', {
+        usuarios
+    });
+});
+
+//UPDATE CHANGE
+router.post('/editUser/:id', async (req, res) => {
+    const { id } = req.params;
+    await Usuario.update({ _id: id }, req.body);
+    res.redirect('/usuarios');
+});
 /**======================================================*/
 module.exports = router;
