@@ -5,6 +5,7 @@ const router = express.Router();
 const Cliente = require('../models/clients');
 const Usuario = require('../models/users');
 const Proveedor = require('../models/vendors');
+const Producto = require('../models/products');
 /**===================================================== */
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
@@ -147,6 +148,15 @@ router.post('/editVendor/:id', async (req, res) => {
     const { id } = req.params;
     await Proveedor.update({ _id: id }, req.body);
     res.redirect('/proveedores');
+});
+/**======================================================*/
+
+/**======================================================*/
+/** CRUD PRODUCTOS */
+//READ
+router.get('/productos', async (req, res) => {
+    const productos = await Producto.find();
+    res.render('productos');
 });
 /**======================================================*/
 module.exports = router;
