@@ -4,6 +4,7 @@ const router = express.Router();
 /**========================MODELS======================= */
 const Cliente = require('../models/clients');
 const Usuario = require('../models/users');
+const Proveedor = require('../models/vendors');
 /**===================================================== */
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
@@ -105,6 +106,47 @@ router.post('/editUser/:id', async (req, res) => {
     const { id } = req.params;
     await Usuario.update({ _id: id }, req.body);
     res.redirect('/usuarios');
+});
+/**======================================================*/
+
+/**======================================================*/
+/** CRUD PROVEEDORES */
+//READ
+router.get('/proveedores', async (req, res) => {
+    const proveedores = await Proveedor.find();
+    res.render('proveedores', {
+        proveedores
+    });
+});
+
+//ADD
+router.post('/addVendor', async (req, res) => {
+    const proveedores = new Proveedor(req.body);
+    await proveedores.save();
+    res.redirect('/proveedores');
+});
+
+//DELETE
+router.get('/deleteVendor/:id', async (req, res) => {
+    const { id } = req.params;
+    await Proveedor.deleteOne({_id: id});
+    res.redirect('/proveedores');
+});
+
+//UPDATE LIST
+router.get('/editVendor/:id', async (req, res) => {
+    const { id } = req.params;
+    const proveedores = await Proveedor.findById(id);
+    res.render('editVendor', {
+        proveedores
+    });
+});
+
+//UPDATE CHANGE
+router.post('/editVendor/:id', async (req, res) => {
+    const { id } = req.params;
+    await Proveedor.update({ _id: id }, req.body);
+    res.redirect('/proveedores');
 });
 /**======================================================*/
 module.exports = router;
