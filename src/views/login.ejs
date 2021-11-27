@@ -34,7 +34,7 @@
                     <div class="login100-pic js-tilt" data-tilt>
                         <img src="images/carrito.png" alt="IMG">
                     </div>
-                    <form class="login100-form validate-form">
+                    <form class="login100-form validate-form" action="/log" method="post">
                         <span class="login100-form-title">
                             <b>Inicio de Sesion</b>
                         </span>
@@ -53,15 +53,20 @@
                             </span>
                         </div>
                         <div class="container-login100-form-btn">
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" type="submit">
                                 Login
                             </button>
                         </div>
+                        <% if(message.length > 0){ %>
+                        <div class="alert alert-danger">
+                            <%= message %>
+                        </div>
+                        <% } %>
                         <div class="text-center p-t-12">
-                            <a class="txt2" href="/home">
-                                ¡Si deseas unirte, habla con el Admin del sistema!
+                            <a class="txt2" href="/signup">
+                                Si no tienes cuenta, ¡Registrate!
                             </a>
-                            <br>
+                            <hr>
                             <a class="txt2" href="/">
                                 <i class="fas fa-chevron-left m-r-5" aria-hidden="true"></i>
                                 Volver

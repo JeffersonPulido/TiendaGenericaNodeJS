@@ -1,12 +1,17 @@
-const path = require('path');
 const express = require('express');
 const app = express();
-const morgan = require('morgan');
+
+const path = require('path');
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 
 //CONECT BD
-mongoose.connect('mongodb://localhost/tiendagenerica')
+const { url } = require('./config/database.js');
+mongoose.connect(url)
 .then(db => console.log('DATABASE: ON'))
 .catch(err => console.log(err));
 //IMPORT ROUTES
@@ -19,14 +24,16 @@ app.use(express.static(__dirname + '/public'));
 //MIDDLEWARES
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({
-    secret: 'mysecretapp',
-    resave: true,
-    saveUninitialized: true
-}))
+    secret : 'apptiendagenerica',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 //ROUTES
 app.use('/', indexRoutes);
-app.use(require('./routes/users'));
 //START SERVER
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);

@@ -16,11 +16,22 @@ router.get('/', async (req, res) => {
     res.render('index');
 });
 
+//REDIRECCION SIGNUP
+router.get('/signup', async (req, res) => {
+    const clients = await Cliente.find();
+    res.render('register');
+});
+
 //REDIRECCION LOGIN
 router.get('/login', async (req, res) => {
     const clients = await Cliente.find();
-    res.render('login');
+    res.render('login', {
+        message: req.flash('loginMessage')
+    });
 });
+
+//LOGIN
+router.get('/log', async (req, res) => {});
 
 //REDIRECCION HOME
 router.get('/home', async (req, res) => {
