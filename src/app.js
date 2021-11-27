@@ -3,10 +3,11 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 //CONECT BD
 mongoose.connect('mongodb://localhost/tiendagenerica')
-.then(db => console.log('DB CONECTADO'))
+.then(db => console.log('DATABASE: ON'))
 .catch(err => console.log(err));
 //IMPORT ROUTES
 const indexRoutes = require('./routes/routes');
@@ -18,8 +19,14 @@ app.use(express.static(__dirname + '/public'));
 //MIDDLEWARES
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
+app.use(session({
+    secret: 'mysecretapp',
+    resave: true,
+    saveUninitialized: true
+}))
 //ROUTES
 app.use('/', indexRoutes);
+app.use(require('./routes/users'));
 //START SERVER
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);
