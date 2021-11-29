@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
-
+const csv = require("csvtojson");
+const multer = require('multer');
+const path = require('path');
 /**========================MODELS======================= */
 const Cliente = require('../models/clients');
 const Usuario = require('../models/users');
 const Proveedor = require('../models/vendors');
-const Producto = require('../models/products');
+const csvModel = require('../models/csv');
 /**===================================================== */
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
@@ -181,49 +183,14 @@ router.post('/editVendor/:id', async (req, res) => {
 /** CRUD PRODUCTOS */
 //READ
 router.get('/productos', async (req, res) => {
-    const productos = await Producto.find();
-    res.render('productos');
+    const productos = await csvModel.find();
+    res.render('productos', {
+        productos
+    });
 });
+
+
 /**======================================================*/
 
-//REGISTER
-/**
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.post('/register', (req, res) => {
-    const {usuario, password} = req.body;
-    const user = new User({usuario, password});
-    user.save(err => {
-        if(err){
-            res.status(500).send('Error al registrar usuario');
-        }else{
-            res.status(200).send('Usuario Registrador');
-        }
-    });
-});
-*/
-/**
-app.post('/authenticate', (req, res) => {
-    const {usuario, password} = req.body;
-    user.findOne({usuario}, (err, user) => {
-        if(err){
-            res.status(500).send('Error al autenticar usuario');
-        }else if(!user){
-            res.status(500).send('Usuario no existe!');
-        }else{
-            user.isCorrectPassword(password, (err, result) => {
-                if(err){
-                    res.status(500).send('Error al autenticar usuario');
-                }else if(result){
-                    res.status(200).send('Usuario autenticado con exito!');
-                }else{
-                    res.status(500).send('Usuario y/o Contraseña incorrecta!');
-                }
-            });
-        }
-    });
-})
-*/
 /**===================================================== */
 module.exports = router;
