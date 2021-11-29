@@ -12,30 +12,21 @@ const Producto = require('../models/products');
 
 //REDIRECCION INDEX
 router.get('/', async (req, res) => {
-    const clients = await Cliente.find();
     res.render('index');
-});
-
-//REDIRECCION SIGNUP
-router.get('/signup', async (req, res) => {
-    const clients = await Cliente.find();
-    res.render('register');
 });
 
 //REDIRECCION LOGIN
 router.get('/login', async (req, res) => {
-    const clients = await Cliente.find();
-    res.render('login', {
-        message: req.flash('loginMessage')
-    });
+    res.render('login');
 });
 
-//LOGIN
-router.get('/log', async (req, res) => {});
+//REDIRECCION SIGNUP
+router.get('/signup', async (req, res) => {
+    res.render('register');
+});
 
 //REDIRECCION HOME
 router.get('/home', async (req, res) => {
-    const clients = await Cliente.find();
     res.render('home');
 });
 /**======================================================*/

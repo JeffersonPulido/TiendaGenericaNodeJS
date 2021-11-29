@@ -3,11 +3,7 @@ const app = express();
 
 const path = require('path');
 const mongoose = require('mongoose');
-const flash = require('connect-flash');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
 
 //CONECT BD
 const { url } = require('./config/database.js');
@@ -24,14 +20,6 @@ app.use(express.static(__dirname + '/public'));
 //MIDDLEWARES
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(session({
-    secret : 'apptiendagenerica',
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(flash());
 //ROUTES
 app.use('/', indexRoutes);
 //START SERVER
