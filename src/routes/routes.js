@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
 
 /**========================MODELS======================= */
 const Cliente = require('../models/clients');
@@ -19,6 +21,28 @@ router.get('/', async (req, res) => {
 router.get('/login', async (req, res) => {
     res.render('login');
 });
+
+//AUTENTICAR USUARIO
+router.post('/authenticate', (req, res) => {
+    const {usuario, password} = req.body;
+    Usuario.findOne({usuario}, (err, user) => {
+        if(err){
+            res.render('500');
+        }else if(!user){
+            res.render('500');
+        }else{
+            user.isCorrectPassword(password, (err, result) => {
+                if(err){
+                    res.render('500');
+                }else if(result){
+                    res.render('home');
+                }else{
+                    res.render('500');
+                }
+            });
+        }
+    });
+})
 
 //REDIRECCION SIGNUP
 router.get('/signup', async (req, res) => {
@@ -82,10 +106,10 @@ router.get('/usuarios', async (req, res) => {
 });
 
 //ADD
-router.post('/addUser', async (req, res) => {
+router.post('/register', async (req, res) => {
     const usuarios = new Usuario(req.body);
     await usuarios.save();
-    res.redirect('/usuarios');
+    res.redirect('/login');
 });
 
 //DELETE
@@ -161,4 +185,45 @@ router.get('/productos', async (req, res) => {
     res.render('productos');
 });
 /**======================================================*/
+
+//REGISTER
+/**
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.post('/register', (req, res) => {
+    const {usuario, password} = req.body;
+    const user = new User({usuario, password});
+    user.save(err => {
+        if(err){
+            res.status(500).send('Error al registrar usuario');
+        }else{
+            res.status(200).send('Usuario Registrador');
+        }
+    });
+});
+*/
+/**
+app.post('/authenticate', (req, res) => {
+    const {usuario, password} = req.body;
+    user.findOne({usuario}, (err, user) => {
+        if(err){
+            res.status(500).send('Error al autenticar usuario');
+        }else if(!user){
+            res.status(500).send('Usuario no existe!');
+        }else{
+            user.isCorrectPassword(password, (err, result) => {
+                if(err){
+                    res.status(500).send('Error al autenticar usuario');
+                }else if(result){
+                    res.status(200).send('Usuario autenticado con exito!');
+                }else{
+                    res.status(500).send('Usuario y/o Contraseña incorrecta!');
+                }
+            });
+        }
+    });
+})
+*/
+/**===================================================== */
 module.exports = router;
