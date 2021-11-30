@@ -56,7 +56,19 @@ router.get('/signup', async (req, res) => {
 router.get('/home', async (req, res) => {
     res.render('home');
 });
+
+//REDIRECCION REPORTES
+router.get('/reportes', async (req, res) => {
+    res.render('reportes');
+});
 /**======================================================*/
+//REPORTE CLIENTES
+router.get('/listclientes', async (req, res) => {
+    const clients = await Cliente.find();
+    res.render('listclientes', {
+        clients
+    });
+});
 
 /**======================================================*/
 /** CRUD CLIENTES */
