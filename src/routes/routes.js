@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const csv = require("csvtojson");
 const multer = require('multer');
+const multipart = require('connect-multiparty')
 const path = require('path');
 /**========================MODELS======================= */
 const Cliente = require('../models/clients');
@@ -179,7 +180,6 @@ router.post('/editVendor/:id', async (req, res) => {
 });
 /**======================================================*/
 
-
 /**======================================================*/
 /** CRUD PRODUCTOS */
 //READ
@@ -189,8 +189,29 @@ router.get('/productos', async (req, res) => {
         productos
     });
 });
-//
 
+//DELETE
+router.get('/deleteProduct/:id', async (req, res) => {
+    const { id } = req.params;
+    await csvModel.deleteOne({_id: id});
+    res.redirect('/productos');
+});
+
+//UPDATE LIST
+router.get('/editProduct/:id', async (req, res) => {
+    const { id } = req.params;
+    const productos = await csvModel.findById(id);
+    res.render('editProduct', {
+        productos
+    });
+});
+
+//UPDATE CHANGE
+router.post('/editProduct/:id', async (req, res) => {
+    const { id } = req.params;
+    await csvModel.update({ _id: id }, req.body);
+    res.redirect('/productos');
+});
 /**======================================================*/
 
 /**===================================================== */
