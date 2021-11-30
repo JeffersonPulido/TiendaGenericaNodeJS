@@ -76,19 +76,19 @@
         <div class="container mt-5">
             <div class="row">
                 <!--FORM-->
-                <div class="col-md-4">
+                <div class="col-md-4.5">
                     <div class="card">  
                         <div class="card-header"><h5>Cargue archivo CSV </h5></div>  
                         <div class="card-body">  
-                            <form action="./upCsv" method="post" enctype="multipart/form-data"> 
-                                <input type="file" name="csv" multiple type="file" class="file" data-allowed-file-extensions='["csv"]'><br><br>   
+                            <form action="/upcsv" method="post" enctype="multipart/form-data">
+                                <input type="file" name="csv"><br><br>   
                                 <button type="submit" class="btn btn-lg-8  btn-outline-dark"><i class="fas fa-upload"></i> Cargar Archivo Plano <i class="fas fa-file-csv"></i></button>
                             </form>  
                         </div>  
                     </div>  
                 </div>
                 <!--TABLE LIST-->
-                <div class="col-md-8">
+                <div class="col-md-7.5">
                      <table class="table table-reponsive table-striped table-hover text-center table-bordered" id="TablaDat" >
                         <thead>
                             <tr>

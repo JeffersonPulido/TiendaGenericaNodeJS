@@ -1,0 +1,30 @@
+body{
+    width: 100%;  
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #228640;
+    background: -webkit-linear-gradient(-135deg, #228640, #4158d0);
+    background: -o-linear-gradient(-135deg, #4158d0, #228640);
+    background: -moz-linear-gradient(-135deg, #228640, #4158d0);
+    background: linear-gradient(-135deg, #4158d0, #228640);
+}
+
+a{
+    color: azure;
+}
+a:hover{
+    color: rgb(2, 2, 2);
+    text-shadow: rgb(31, 161, 101) 0.1em 0.1em 0.2em;
+}
+
+h1, h3{
+    text-shadow: white 0.1em 0.1em 0.2em;
+}
