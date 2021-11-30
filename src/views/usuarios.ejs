@@ -26,8 +26,8 @@
                     "buttons": true,
                     "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "TODOS"]],
                     "paginate": true,
-                    "language": {"url": "https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json"}
-                        
+                    "language": {"url": "https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json"},
+                    "responsive": true                        
                 });
             } );
         </script>
@@ -78,37 +78,6 @@
                 <div class="col-md-4">
                     <img style="float:right; border-radius: 10px; width: 130%;" class="mt-5" src="/images/users.png" alt="descripción" />
                 </div>
-                <!--FORM
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <form action="/addUser" method="POST">
-                                <div class="form-group">
-                                    <label for="cedula_usuario" class="form-label">Cedula Ciudadania</label>
-                                    <input type="number" min="1" id="cedula_usuario" name="cedula_usuario" placeholder="Ingrese Cedula Ciudadania" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email_usuario" class="form-label">Correo Electronico</label>
-                                    <input type="email" name="email_usuario" placeholder="Ingrese Correo Electronico" class="form-control" required> 
-                                </div>
-                                <div class="form-group">
-                                    <label for="nombre_usuario" class="form-label">Nombre Usuario</label>
-                                    <input type="text" name="nombre_usuario" placeholder="Ingrese Nombre Usuario" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="form-label">Contraseña</label>
-                                    <input type="password" name="password" placeholder="Ingrese Su Contraseña" class="form-control" required> 
-                                </div>
-                                <div class="form-group">
-                                    <label for="usuario" class="form-label">Usuario</label>
-                                    <input type="text"name="usuario" placeholder="Ingrese Su Usuario" class="form-control" required>
-                                </div><br>
-                                <button class="btn btn-primary col-12" type="submit">Agregar Usuario</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                -->
                 <!--TABLE LIST-->
                 <div class="col-md-8">
                      <table class="table table-reponsive table-striped table-hover text-center table-bordered" id="TablaDat" >
