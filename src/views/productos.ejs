@@ -79,10 +79,10 @@
                     <div class="card">  
                         <div class="card-header"><h5>Cargue archivo CSV </h5></div>  
                         <div class="card-body">  
-                            <form action="#" method="post" enctype="multipart/form-data">
+                            <form action="/up" method="post" enctype="multipart/form-data">
                                 <input type="file" name="csv" multiple="multiple"><br><br>   
-                            </form>  
-                            <button type="submit" class="btn btn-lg-8  btn-outline-dark"><i class="fas fa-upload"></i> Cargar Archivo Plano <i class="fas fa-file-csv"></i></button>
+                                <button type="submit" class="btn btn-lg-8  btn-outline-dark"><i class="fas fa-upload"></i> Cargar Archivo Plano <i class="fas fa-file-csv"></i></button>
+                            </form>                              
                         </div>  
                     </div>  
                 </div>
@@ -101,17 +101,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% for(var i = 0; i < productos.length; i++){%>
+                            <% for(var i = 0; i < data.length; i++){%>
                             <tr>
-                                <td><%=productos[i].codigo_producto%></td>
-                                <td><%=productos[i].nombre_producto%></td>
-                                <td><%=productos[i].nitproveedor%></td>
-                                <td><%=productos[i].precio_compra%></td>
-                                <td><%=productos[i].ivacompra%></td>
-                                <td><%=productos[i].precio_venta%></td>
+                                <td><%=data[i].codigo_producto%></td>
+                                <td><%=data[i].nombre_producto%></td>
+                                <td><%=data[i].nitproveedor%></td>
+                                <td><%=data[i].precio_compra%></td>
+                                <td><%=data[i].ivacompra%></td>
+                                <td><%=data[i].precio_venta%></td>
                                 <td>
-                                    <a href="/editProduct/<%=productos[i]._id%>" class="btn btn-success" style="width: 46%;"><i class="fas fa-edit"></i></a>
-                                    <a href="/deleteProduct/<%=productos[i]._id%>" class="btn btn-danger" style="width: 46%;"><i class="fas fa-minus-circle"></i></a>
+                                    <a href="/editProduct/<%=data[i]._id%>" class="btn btn-success" style="width: 46%;"><i class="fas fa-edit"></i></a>
+                                    <a href="/deleteProduct/<%=data[i]._id%>" class="btn btn-danger" style="width: 46%;"><i class="fas fa-minus-circle"></i></a>
                                 </td>
                             </tr>
                             <%}%>

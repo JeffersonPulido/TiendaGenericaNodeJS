@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
+const path = require('path');
+const multipart = require('connect-multiparty')
 const csv = require("csvtojson");
 const multer = require('multer');
-const multipart = require('connect-multiparty')
-const path = require('path');
+
 /**========================MODELS======================= */
 const Cliente = require('../models/clients');
 const Usuario = require('../models/users');
@@ -19,12 +20,10 @@ const csvModel = require('../models/csv');
 router.get('/', async (req, res) => {
     res.render('index');
 });
-
 //REDIRECCION LOGIN
 router.get('/login', async (req, res) => {
     res.render('login');
 });
-
 //AUTENTICAR USUARIO
 router.post('/authenticate', (req, res) => {
     const {usuario, password} = req.body;
@@ -46,17 +45,14 @@ router.post('/authenticate', (req, res) => {
         }
     });
 })
-
 //REDIRECCION SIGNUP
 router.get('/signup', async (req, res) => {
     res.render('register');
 });
-
 //REDIRECCION HOME
 router.get('/home', async (req, res) => {
     res.render('home');
 });
-
 //REDIRECCION REPORTES
 router.get('/reportes', async (req, res) => {
     res.render('reportes');
@@ -69,7 +65,6 @@ router.get('/listclientes', async (req, res) => {
         clients
     });
 });
-
 /**======================================================*/
 /** CRUD CLIENTES */
 //READ
@@ -79,21 +74,18 @@ router.get('/clientes', async (req, res) => {
         clients
     });
 });
-
 //ADD
 router.post('/add', async (req, res) => {
     const cliente = new Cliente(req.body);
     await cliente.save();
     res.redirect('/clientes');
 });
-
 //DELETE
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
     await Cliente.deleteOne({_id: id});
     res.redirect('/clientes');
 });
-
 //UPDATE LIST
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
@@ -102,7 +94,6 @@ router.get('/edit/:id', async (req, res) => {
         cliente
     });
 });
-
 //UPDATE CHANGE
 router.post('/edit/:id', async (req, res) => {
     const { id } = req.params;
@@ -119,21 +110,18 @@ router.get('/usuarios', async (req, res) => {
         usuarios
     });
 });
-
 //ADD
 router.post('/register', async (req, res) => {
     const usuarios = new Usuario(req.body);
     await usuarios.save();
     res.redirect('/login');
 });
-
 //DELETE
 router.get('/deleteUser/:id', async (req, res) => {
     const { id } = req.params;
     await Usuario.deleteOne({_id: id});
     res.redirect('/usuarios');
 });
-
 //UPDATE LIST
 router.get('/editUser/:id', async (req, res) => {
     const { id } = req.params;
@@ -142,7 +130,6 @@ router.get('/editUser/:id', async (req, res) => {
         usuarios
     });
 });
-
 //UPDATE CHANGE
 router.post('/editUser/:id', async (req, res) => {
     const { id } = req.params;
@@ -150,7 +137,6 @@ router.post('/editUser/:id', async (req, res) => {
     res.redirect('/usuarios');
 });
 /**======================================================*/
-
 /**======================================================*/
 /** CRUD PROVEEDORES */
 //READ
@@ -160,21 +146,18 @@ router.get('/proveedores', async (req, res) => {
         proveedores
     });
 });
-
 //ADD
 router.post('/addVendor', async (req, res) => {
     const proveedores = new Proveedor(req.body);
     await proveedores.save();
     res.redirect('/proveedores');
 });
-
 //DELETE
 router.get('/deleteVendor/:id', async (req, res) => {
     const { id } = req.params;
     await Proveedor.deleteOne({_id: id});
     res.redirect('/proveedores');
 });
-
 //UPDATE LIST
 router.get('/editVendor/:id', async (req, res) => {
     const { id } = req.params;
@@ -183,7 +166,6 @@ router.get('/editVendor/:id', async (req, res) => {
         proveedores
     });
 });
-
 //UPDATE CHANGE
 router.post('/editVendor/:id', async (req, res) => {
     const { id } = req.params;
@@ -191,24 +173,69 @@ router.post('/editVendor/:id', async (req, res) => {
     res.redirect('/proveedores');
 });
 /**======================================================*/
-
 /**======================================================*/
 /** CRUD PRODUCTOS */
+//ALMACENAMIENTO CSV 
+var storage = multer.diskStorage({  
+    destination:(req,file,cb)=>{  
+        cb(null,'src/public/uploads');  
+    },  
+    filename:(req,file,cb)=>{  
+        cb(null,file.originalname);  
+    }  
+}); 
+//RUTA
+var uploads = multer({storage:storage});  
 //READ
-router.get('/productos', async (req, res) => {
-    const productos = await csvModel.find();
-    res.render('productos', {
-        productos
-    });
+router.get('/productos',(req,res)=>{  
+    csvModel.find((err,data)=>{  
+         if(err){  
+             console.log(err);  
+         }else{  
+              if(data!=''){  
+                  res.render('productos',{data:data});  
+              }else{  
+                  res.render('productos',{data:''});  
+              }  
+         }  
+    });  
 });
-
+//CARGUE DE CSV
+var temp ;  
+router.post('/up',uploads.single('csv'),(req,res)=>{   
+csv()  
+.fromFile(req.file.path)  
+.then((jsonObj)=>{  
+    //console.log(jsonObj);  
+    for(var x=0;x<jsonObj;x++){  
+        temp = parseInt(jsonObj[x].codigo_producto)  
+        jsonObj[x].codigo_producto = temp;  
+        temp = jsonObj[x].nombre_producto  
+        jsonObj[x].nombre_producto = temp;  
+        temp = parseInt(jsonObj[x].nitproveedor)  
+        jsonObj[x].nitproveedor = temp;  
+        temp = parseFloat(jsonObj[x].precio_compra)  
+        jsonObj[x].precio_compra = temp;  
+        temp = parseFloat(jsonObj[x].ivacompra)  
+        jsonObj[x].ivacompra = temp;
+        temp = parseFloat(jsonObj[x].precio_venta)  
+        jsonObj[x].precio_venta = temp;   
+     } 
+     csvModel.insertMany(jsonObj,(err,data)=>{  
+            if(err){  
+                console.log(err);  
+            }else{  
+                res.redirect('productos');  
+            }  
+     });  
+   });  
+});
 //DELETE
 router.get('/deleteProduct/:id', async (req, res) => {
     const { id } = req.params;
     await csvModel.deleteOne({_id: id});
     res.redirect('/productos');
 });
-
 //UPDATE LIST
 router.get('/editProduct/:id', async (req, res) => {
     const { id } = req.params;
@@ -217,7 +244,6 @@ router.get('/editProduct/:id', async (req, res) => {
         productos
     });
 });
-
 //UPDATE CHANGE
 router.post('/editProduct/:id', async (req, res) => {
     const { id } = req.params;
@@ -225,6 +251,5 @@ router.post('/editProduct/:id', async (req, res) => {
     res.redirect('/productos');
 });
 /**======================================================*/
-
 /**===================================================== */
 module.exports = router;

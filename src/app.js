@@ -3,10 +3,12 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const csv = require("csvtojson");
-const bodyParser = require('body-parser');
+var bodyParser  = require('body-parser'); 
+/**
+var csv         = require('csvtojson');  
 const multer = require('multer');
 const csvModel = require('./models/csv');
+*/
 //CONECT BD
 const { url } = require('./config/database.js');
 mongoose.connect(url)
@@ -20,7 +22,8 @@ const indexRoutes = require('./routes/routes');
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
+//app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.resolve(__dirname,'public')));  
 
 //MIDDLEWARES
 app.use(morgan('dev'));
