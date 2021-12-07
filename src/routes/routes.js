@@ -12,7 +12,8 @@ const Cliente = require('../models/clients');
 const Usuario = require('../models/users');
 const Proveedor = require('../models/vendors');
 const csvModel = require('../models/csv');
-/**===================================================== */
+/**====================CONTROLLER=========================== */
+const ventaController = require('../controllers/ventaController')
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
 
@@ -57,7 +58,6 @@ router.get('/home', async (req, res) => {
 router.get('/reportes', async (req, res) => {
     res.render('reportes');
 });
-/**======================================================*/
 //REPORTE CLIENTES
 router.get('/listclientes', async (req, res) => {
     const clients = await Cliente.find();
@@ -250,6 +250,11 @@ router.post('/editProduct/:id', async (req, res) => {
     await csvModel.update({ _id: id }, req.body);
     res.redirect('/productos');
 });
+/**======================================================*/
+/**===================================================== */
+/** MODULO VENTAS */
+router.get('/ventas', ventaController.mostrar)
+router.post('/ventas/crear', ventaController.crear)
 /**======================================================*/
 /**===================================================== */
 module.exports = router;
