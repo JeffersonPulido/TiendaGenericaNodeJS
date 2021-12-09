@@ -115,8 +115,7 @@
                             <!--ELECCION PRODUCTOS-->
                             <div class="row mt-4 d-none panelVentas">
                                 <form id="formularioVenta" action="/ventas/crear" method="post">
-                                    <input type="hidden" name="codigoVenta" id="codigoVenta"
-                                        value="<%= codigo_venta %>">
+                                    <input type="hidden" name="codigoVenta" id="codigoVenta" value="<%= codigo_venta %>">
                                     <input type="hidden" name="cedulaCliente" id="cedula">
                                     <input type="hidden" name="ivaVenta" id="iva">
                                     <input type="hidden" name="totalVenta" id="subtotal">
@@ -219,19 +218,16 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-text">
+            <div class="footer-text fixed-bottom">
                 <a href="">©MinTIC2022 Developers</a>
             </div>
         </div>
         <!--//app-wrapper-->
         <!-- Javascript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <!-- Page Specific JS -->
         <script src="js/app.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
                 $('.valorProducto').val(0);
@@ -269,8 +265,8 @@
                     var id = $(this).val();
                     $.ajax({
                         type: "post",
-                        url: "productos?search=" + id,
-                        data: "search=" + id,
+                        url: "productos?search=" + _id,
+                        data: "search=" + _id,
                         dataType: "json",
                         success: function (resultado) {
                             if (!resultado.productos.length) {

@@ -1,4 +1,4 @@
-codigo_producto,nombre_producto,nitproveedor,precio_compra,ivacompra,precio_venta
+codigo_producto,nombre_producto,proveedor,precio_compra,iva_compra,precio_venta
 1,Melocotones,1,25505,19,30351
 2,Manzanas,3,18108,19,21549
 3,Platanos,4,29681,19,35320

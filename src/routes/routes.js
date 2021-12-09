@@ -6,16 +6,16 @@ const path = require('path');
 const multipart = require('connect-multiparty')
 const csv = require("csvtojson");
 const multer = require('multer');
-
 /**========================MODELS======================= */
 const Cliente = require('../models/clients');
 const Usuario = require('../models/users');
 const Proveedor = require('../models/vendors');
-const csvModel = require('../models/csv');
+const csvModel = require('../models/Producto');
 /**====================CONTROLLER=========================== */
 const ventaController = require('../controllers/ventaController')
 const reporteController = require('../controllers/reporteController')
 const clienteController = require('../controllers/clienteController')
+const productoController = require('../controllers/productoController')
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
 //REDIRECCION INDEX
@@ -177,55 +177,11 @@ var storage = multer.diskStorage({
 //RUTA
 var uploads = multer({storage:storage});  
 //READ
-router.get('/productos',(req,res)=>{  
-    csvModel.find((err,data)=>{  
-         if(err){  
-             console.log(err);  
-         }else{  
-              if(data!=''){  
-                  res.render('productos',{data:data});  
-              }else{  
-                  res.render('productos',{data:''});  
-              }  
-         }  
-    });  
-});
-//CARGUE DE CSV
-var temp ;  
-router.post('/up',uploads.single('csv'),(req,res)=>{   
-csv()  
-.fromFile(req.file.path)  
-.then((jsonObj)=>{  
-    //console.log(jsonObj);  
-    for(var x=0;x<jsonObj;x++){  
-        temp = parseInt(jsonObj[x].codigo_producto)  
-        jsonObj[x].codigo_producto = temp;  
-        temp = jsonObj[x].nombre_producto  
-        jsonObj[x].nombre_producto = temp;  
-        temp = parseInt(jsonObj[x].nitproveedor)  
-        jsonObj[x].nitproveedor = temp;  
-        temp = parseFloat(jsonObj[x].precio_compra)  
-        jsonObj[x].precio_compra = temp;  
-        temp = parseFloat(jsonObj[x].ivacompra)  
-        jsonObj[x].ivacompra = temp;
-        temp = parseFloat(jsonObj[x].precio_venta)  
-        jsonObj[x].precio_venta = temp;   
-     } 
-     csvModel.insertMany(jsonObj,(err,data)=>{  
-            if(err){  
-                console.log(err);  
-            }else{  
-                res.redirect('productos');  
-            }  
-     });  
-   });  
-});
-//DELETE
-router.get('/deleteProduct/:id', async (req, res) => {
-    const { id } = req.params;
-    await csvModel.deleteOne({_id: id});
-    res.redirect('/productos');
-});
+router.get('/productos', productoController.mostrar)
+//JSON
+router.post('/productos', productoController.json)
+//UPLOAD
+router.post('/productos/crear', uploads.single('CSV'), productoController.importCSV)
 //UPDATE LIST
 router.get('/editProduct/:id', async (req, res) => {
     const { id } = req.params;
@@ -240,6 +196,8 @@ router.post('/editProduct/:id', async (req, res) => {
     await csvModel.update({ _id: id }, req.body);
     res.redirect('/productos');
 });
+//DELETE
+router.get('/productos/borrar/:id', productoController.borrar)
 /**======================================================*/
 /**===================================================== */
 /** MODULO VENTAS */
