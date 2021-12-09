@@ -222,109 +222,107 @@
                 <a href="">©MinTIC2022 Developers</a>
             </div>
         </div>
-        <!--//app-wrapper-->
         <!-- Javascript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <!-- Page Specific JS -->
         <script src="js/app.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script>
-            $(document).ready(function () {
-                $('.valorProducto').val(0);
-                $('.valorProducto').attr("value", 0);
-                //Funcion consultar cliente
-                $("#buscarCliente").submit(function (e) {
-                    e.preventDefault();
-                    var id = $("#cedulaCliente").val();
-                    $.ajax({
-                        type: "post",
-                        url: "/clientes?search=" + id,
-                        data: "search=" + id,
-                        dataType: "json",
-                        success: function (resultado) {
-                            if (!resultado.clientes.length) {
-                                $("#cedula, #nombreCliente, #direccionCliente, #emailCliente, #telefonoCliente").html("");
-                                $(".panelVentas").hide();
-                                alert("Ocurrio un error");
-                            } else {
-                                $("#cedula").val(resultado.clientes[0].cedula_cliente);
-                                $("#nombreCliente").html(resultado.clientes[0].nombre_cliente);
-                                $("#direccionCliente").html(resultado.clientes[0].direccion_cliente);
-                                $("#emailCliente").html(resultado.clientes[0].email_cliente);
-                                $("#telefonoCliente").html(resultado.clientes[0].telefono_cliente);
-                                $(".panelVentas").removeClass("d-none").show();
-                            }
-                        }
-                    });
-                })
-
-                //Funcion buscar producto
-                $(".codigoProducto").blur(function (e) {
-                    e.stopPropagation();
-                    var td = $(this);
-                    var id = $(this).val();
-                    $.ajax({
-                        type: "post",
-                        url: "productos?search=" + _id,
-                        data: "search=" + _id,
-                        dataType: "json",
-                        success: function (resultado) {
-                            if (!resultado.productos.length) {
-                                td.val("");
-                                td.attr("value", "");
-                                alert("Ocurrio un error");
-                                td.parent().next().children().val("");
-                                td.parent().next().next().next().children().val(0);
-                                td.parent().next().next().next().children().attr(0);
-                            } else {
-                                td.next().val(resultado.productos[0]._id)
-                                td.parent().next().children().val(resultado.productos[0].nombre_producto);
-                                td.parent().next().next().next().children().val(resultado.productos[0].precio_venta);
-                                td.parent().next().next().next().children().attr("data-value", resultado.productos[0].precio_venta);
-                                td.parent().next().next().next().children().attr("data-iva", resultado.productos[0].iva_compra);
-
-                            }
-                        }
-                    });
-                })
-
-                //Funcion calcular valor cantidad
-                $(".cantidadProducto").blur(function (e) {
-                    e.stopPropagation();
-                    var td = $(this);
-                    var cantidad = parseFloat($(this).val());
-                    var precio = td.parent().next().children().attr("data-value");
-                    if (isNaN(precio)) {
-                        var precio = 0;
-                    }
-                    var total = cantidad * precio;
-                    td.parent().next().children().attr("value", total);
-                    td.parent().next().children().val(total);
-                    calcularTotal();
-                })
-
-                function calcularTotal() {
-                    var subtotal = 0;
-                    var iva = 0;
-                    $('.valorProducto').each(function () {
-                        subtotal += parseFloat($(this).attr("value"));
-                        if (isNaN(parseFloat($(this).attr("data-iva")))) {
-                            iva += 0;
-                        } else {
-                            iva += parseFloat($(this).attr("data-iva")) * parseFloat($(this).attr("value")) / 100;
-                        }
-                    });
-                    $(".subTotal").html(subtotal);
-                    var valorIva = (iva);
-                    $(".valorIVA").html(valorIva);
-                    $(".valorTotal").html(subtotal + valorIva);
-                    //Pasar datos a formulario
-                    $("#subtotal").val(subtotal);
-                    $("#iva").val(valorIva);
-                    $("#total").val(subtotal + valorIva);
+        $(document).ready(function(){
+            $('.valorProducto').val(0);
+            $('.valorProducto').attr("value",0);
+            //Funcion consultar cliente
+            $("#buscarCliente").submit(function(e){
+                e.preventDefault();
+                var id = $("#cedulaCliente").val();
+                $.ajax({
+                    type:"post",
+                url:"/clientes?search="+id,
+                    data: "search="+id,
+                    dataType:"json",
+                    success: function(resultado){
+                        if(!resultado.clientes.length){
+                $("#cedula, #nombreCliente, #direccionCliente, #emailCliente, #telefonoCliente").html("");
+                            $(".panelVentas").hide();
+                            alert("Ocurrio un error");
+                }else{
+                $("#cedula").val(resultado.clientes[0].cedula_cliente);
+                            $("#nombreCliente").html(resultado.clientes[0].nombre_cliente);
+                            $("#direccionCliente").html(resultado.clientes[0].direccion_cliente);
+                            $("#emailCliente").html(resultado.clientes[   0].email_cliente);
+                            $("#telefonoCliente").html(resultado.clientes[0].telefono_cliente);
+                            $(".panelVentas").removeClass("d-none").show();
                 }
-
-            });
+                    }
+                });
+            })
+            //Funcion buscar producto
+            $(".codigoProducto").blur(function(e){
+                e.stopPropagation();
+                var td = $(this);
+                var id = $(this).val();
+                $.ajax({
+                    type:"post",
+                url:"productos?search="+id,
+                    data: "search="+id,
+                    dataType:"json",
+                    success: function(resultado){
+                        if(!resultado.productos.length){
+                            td.val("");
+                            td.attr("value", "");
+                            alert("Ocurrio un error");
+                            td.parent().next().children().val("");
+                            td.parent().next().next().next().children().val(0);
+                            td.parent().next().next().next().children().attr(0);
+                        }else{
+                td.next().val(resultado.productos[0]._id)
+                td.parent().next().children().val(resultado.productos[0].nombre_producto);
+                            td.parent().next().next().next().children().val(resultado.productos[0].precio_venta);
+                            td.parent().next().next().next().children().attr("data-value",resultado.productos[0].precio_venta);
+                            td.parent().next().next().next().children().attr("data-iva",resultado.productos[0].iva_compra);
+                            
+                        }
+                    }
+                });
+            })
+            
+            //Funcion calcular valor cantidad
+            $(".cantidadProducto").blur(function(e){
+                e.stopPropagation();
+                var td = $(this);
+                var cantidad = parseFloat($(this).val());
+                var precio = td.parent().next().children().attr("data-value");
+                if(isNaN(precio)) {
+                    var precio = 0;
+                }
+                var total = cantidad*precio;
+                td.parent().next().children().attr("value", total);
+                td.parent().next().children().val(total);
+                calcularTotal();
+            })
+            
+            function calcularTotal(){
+                var subtotal = 0;
+                var iva = 0;
+                $('.valorProducto').each(function(){
+                    subtotal += parseFloat($(this).attr("value"));
+                    if(isNaN(parseFloat($(this).attr("data-iva")))) {
+                        iva += 0;
+                    }else{
+                        iva += parseFloat($(this).attr("data-iva"))*parseFloat($(this).attr("value"))/100;
+                    }
+                });
+                $(".subTotal").html(subtotal);
+                var valorIva = (iva);
+                $(".valorIVA").html(valorIva);
+                $(".valorTotal").html(subtotal+valorIva);
+                //Pasar datos a formulario
+                $("#subtotal").val(subtotal);
+                $("#iva").val(valorIva);
+                $("#total").val(subtotal+valorIva);
+            }
+            
+        });
         </script>
     </body>
 </html>
