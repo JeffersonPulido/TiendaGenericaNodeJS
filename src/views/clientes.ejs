@@ -8,8 +8,7 @@
         <link rel="shortcut icon" href="images/icono.ico">
         <link rel="stylesheet" href="css/footer.css">
         <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- FontAwesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
             integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -78,26 +77,26 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <form action="/add" method="POST">
+                            <form action="/clientes/crear" method="POST">
                                 <div class="form-group">
                                     <label for="cedula_cliente" class="form-label">Cedula Ciudadania</label>
-                                    <input type="number" min="1" id="cedula_cliente" name="cedula_cliente" placeholder="Ingrese Cedula Ciudadania" class="form-control" required>
+                                    <input type="number" min="1" name="cedula" id="cedula" placeholder="Ingrese Cedula Ciudadania" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="direccion_cliente" class="form-label">Direccion Residencia</label>
-                                    <input type="text" name="direccion_cliente" placeholder="Ingrese Direccion Residencia" class="form-control" required>
+                                    <input type="text" name="direccion" id="direccion" placeholder="Ingrese Direccion Residencia" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email_cliente" class="form-label">Correo Electronico</label>
-                                    <input type="email" name="email_cliente" placeholder="Ingrese Correo Electronico" class="form-control" required>
+                                    <input type="email" name="email" id="email" placeholder="Ingrese Correo Electronico" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nombre_cliente" class="form-label">Nombre Cliente</label>
-                                    <input type="text" name="nombre_cliente" placeholder="Ingrese Nombre Cliente" class="form-control" required> 
+                                    <label for="nombre" class="form-label">Nombre Cliente</label>
+                                    <input type="text" name="nombre" id="nombre" placeholder="Ingrese Nombre Cliente" class="form-control" required> 
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono_cliente" class="form-label">Telefono Cliente</label>
-                                    <input type="number" min="1" name="telefono_cliente" placeholder="Ingrese Telefono Cliente" class="form-control" required>
+                                    <input type="number" min="1" name="telefono" id="telefono" placeholder="Ingrese Telefono Cliente" class="form-control" required>
                                 </div><br>
                                 <button class="btn btn-primary col-12" type="submit">Agregar Cliente</button>
                             </form>
@@ -109,30 +108,31 @@
                      <table class="table table-reponsive table-striped table-hover text-center table-bordered" id="TablaDat" >
                         <thead>
                             <tr>
-                                <th>C.C</th>
-                                <th>Direccion</th>
-                                <th>Email</th>
+                                <th class="d-none">Id</th>
+                                <th>Cedula</th>
                                 <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Email</th>
                                 <th>Telefono</th>
                                 <th>Acciones</th>
-                            </tr>
+                              </tr>
                         </thead>
                         <tbody>
-                            <% for(var i = 0; i < clients.length; i++){%>
-                            <tr>
-                                <%= clients[i]._id %>
-                                <td><%=clients[i].cedula_cliente%></td>
-                                <td><%=clients[i].direccion_cliente%></td>
-                                <td><%=clients[i].email_cliente%></td>
-                                <td><%=clients[i].nombre_cliente%></td>
-                                <td><%=clients[i].telefono_cliente%></td>
+                            <% clientes.forEach( (cliente)=> {  %>
+                              <tr>
+                                <td class="d-none"><%= cliente._id %></td>
+                                <td><%= cliente.cedula_cliente %></td>
+                                <td><%= cliente.nombre_cliente %></td>
+                                <td><%= cliente.direccion_cliente %></td>
+                                <td><%= cliente.email_cliente %></td>
+                                <td><%= cliente.telefono_cliente %></td>
                                 <td>
-                                    <a href="/edit/<%=clients[i]._id%>" class="btn btn-success" style="width: 46%;"><i class="fas fa-edit"></i></a>
-                                    <a href="/delete/<%=clients[i]._id%>" class="btn btn-danger" style="width: 46%;"><i class="fas fa-minus-circle"></i></a>
+                                    <a href="/edit/<%=cliente._id%>" class="btn btn-success" style="width: 46%;"><i class="fas fa-edit"></i></a>
+                                    <a href="/clientes/borrar/<%= cliente._id %>" class="btn btn-danger" style="width: 46%;"><i class="fas fa-minus-circle"></i></a>
                                 </td>
-                            </tr>
-                            <%}%>
-                        </tbody>
+                              </tr>
+                            <% }) %>
+                            </tbody>
                      </table>
                 </div>
             </div>
@@ -141,9 +141,8 @@
             <a href="">©MinTIC2022 Developers</a>
         </div>
         <!-- JavaScript Bootstrap CDN-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="js/app.js"></script>
     </body>
 
 </html>

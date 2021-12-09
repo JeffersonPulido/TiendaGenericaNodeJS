@@ -14,9 +14,10 @@ const Proveedor = require('../models/vendors');
 const csvModel = require('../models/csv');
 /**====================CONTROLLER=========================== */
 const ventaController = require('../controllers/ventaController')
+const reporteController = require('../controllers/reporteController')
+const clienteController = require('../controllers/clienteController')
 /**======================================================*/
 /** REDIRECCIONES VISTAS */
-
 //REDIRECCION INDEX
 router.get('/', async (req, res) => {
     res.render('index');
@@ -68,38 +69,27 @@ router.get('/listclientes', async (req, res) => {
 /**======================================================*/
 /** CRUD CLIENTES */
 //READ
-router.get('/clientes', async (req, res) => {
-    const clients = await Cliente.find();
-    res.render('clientes', {
-        clients
-    });
-});
+router.get('/clientes', clienteController.mostrar)
+//CREATE JSON
+router.post('/clientes', clienteController.json)
 //ADD
-router.post('/add', async (req, res) => {
-    const cliente = new Cliente(req.body);
-    await cliente.save();
-    res.redirect('/clientes');
-});
-//DELETE
-router.get('/delete/:id', async (req, res) => {
-    const { id } = req.params;
-    await Cliente.deleteOne({_id: id});
-    res.redirect('/clientes');
-});
+router.post('/clientes/crear', clienteController.crear)
 //UPDATE LIST
-router.get('/edit/:id', async (req, res) => {
-    const { id } = req.params;
-    const cliente = await Cliente.findById(id);
+router.get('/edit/:_id', async (req, res) => {
+    const { _id } = req.params;
+    const cliente = await Cliente.findById(_id);
     res.render('edit', {
         cliente
     });
 });
 //UPDATE CHANGE
-router.post('/edit/:id', async (req, res) => {
-    const { id } = req.params;
-    await Cliente.update({ _id: id }, req.body);
+router.post('/edit/:_id', async (req, res) => {
+    const { _id } = req.params;
+    await Cliente.update({ _id: _id }, req.body);
     res.redirect('/clientes');
 });
+//DELETE
+router.get('/clientes/borrar/:id', clienteController.borrar)
 /**======================================================*/
 /**======================================================*/
 /** CRUD USUARIOS */
@@ -255,6 +245,7 @@ router.post('/editProduct/:id', async (req, res) => {
 /** MODULO VENTAS */
 router.get('/ventas', ventaController.mostrar)
 router.post('/ventas/crear', ventaController.crear)
-/**======================================================*/
+/** MODULO REPORTES */
+router.get('/reportesTotal', reporteController.mostrarTotal)
 /**===================================================== */
 module.exports = router;

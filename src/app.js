@@ -34,7 +34,7 @@ app.use('/', indexRoutes);
 
 //START SERVER
 app.listen(app.get('port'), () => {
-    console.log(`Server on port ${app.get('port')}`);
+    console.log(`Server on http://localhost:${app.get('port')}`);
 });
 
 //404
