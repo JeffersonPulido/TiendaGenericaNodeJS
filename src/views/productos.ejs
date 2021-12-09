@@ -83,7 +83,7 @@
         <div class="app-wrapper">
             <div class="app-content pt-3 p-md-3 p-lg-4">
                 <div class="container-xl">
-                    <!--CARGUE CSV-->
+                    <!--UPLOAD CSV-->
                     <div class="row g-3 mb-4 align-items-center justify-content-between">
                         <div class="col-auto">
                             <div class="page-utilities">
@@ -150,6 +150,88 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/productos/crear" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input class="form-control" type="file" name="CSV" id="CSV" required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <button type="submit" class="btn btn-lg-8  btn-outline-dark"><i class="fas fa-upload"></i> Guardar <i class="fas fa-file-csv"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End addModal-->
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/productos/editar" method="post">
+                            <div class="row">
+                                <input type="hidden" id="id_editar" name="id_editar">
+                                <div class="col-md-6 mb-3">
+                                    <label for="codigo_editar" class="form-label">Codigo producto</label>
+                                    <input type="tel" required class="form-control" name="codigo_editar"
+                                        id="codigo_editar">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombre_editar" class="form-label">Nombre</label>
+                                    <input type="text" required class="form-control" name="nombre_editar"
+                                        id="nombre_editar">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="proveedor_editar" class="form-label">Proveedor</label>
+                                    <input type="text" required class="form-control" name="proveedor_editar"
+                                        id="proveedor_editar">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="precio_compra_editar" class="form-label">Precio Compra</label>
+                                    <input type="tel" required class="form-control" name="precio_compra_editar"
+                                        id="precio_compra_editar">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="iva_editar" class="form-label">IVA</label>
+                                    <input type="tel" required class="form-control" name="iva_editar" id="iva_editar">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="precio_venta_editar" class="form-label">Precio Venta</label>
+                                    <input type="tel" required class="form-control" name="precio_venta_editar"
+                                        id="precio_venta_editar">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <hr>
+                                <div class="col-md-12 d-inline-flex">
+                                    <button type="button" class="d-flex justify-content-start btn btn-secondary me-auto"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit"
+                                        class="btn app-btn-primary d-flex justify-content-end">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End editModal-->
         <div class="footer-text">
             <a href="">©MinTIC2022 Developers</a>
         </div>
