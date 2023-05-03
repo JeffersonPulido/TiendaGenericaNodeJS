@@ -35,10 +35,7 @@ N/A
 ```
 
 <h1 align="center">Hi 👋, I'm Jefferson Pulido</h1>
-<h3 align="center">Soy Desarrollador Web Full Stack Junior con conocimientos básicos en POO, BDO, PHP, JavaScript y
-    actualmente estoy aprendiendo ReactJs, ademas de otras tecnologías para mantenerme siempre en la vanguardia con los
-    lenguajes mas demandados. Me caracterizo por ser responsable y autónomo, autodidacta y líder, me gusta aprender de
-    diferentes áreas y buscar las mejores soluciones al problema planteado.</h3>
+<h3 align="center">Soy un Desarrollador Web Full Stack Junior, con conocimiento en tecnologías como PHP, Python, bases de datos, NodeJS, JavaScript y ReactJs, y siempre al día en los lenguajes más demandados. Soy responsable, autónomo, autodidacta y líder, lo que me permite buscar las mejores soluciones a cualquier problema. Me encanta aprender de diferentes áreas y estoy seguro de que puedo contribuir al éxito de su empresa. ¡Trabajemos juntos para hacer realidad nuestros sueños!</h3>
 
 <p align="center"> <img
         src="https://komarev.com/ghpvc/?username=jeffersonpulido&label=Profile%20views&color=dc3545&style=flat"
